@@ -2,7 +2,7 @@
 Shared workspace for research assistants in the NICE research group who are supervised by Linh Nguyen.  
 
 
-* Note on syntax: When available, please use the command lines exactly as indicated below. Whenever there is a squared bracket `<>`, you should put in the appropriate information there and NOT include the brackets themselves. When there is no command line provided, this means the action can be done by point-and-click on the Github page. As usual, please let me know immediately if there is any question or concern. We are using the [Forking Workflow](https://medium.com/dev-genius/git-forking-workflow-bbba0226d39c)
+* Note on syntax: When available, please use the command lines exactly as indicated below. Whenever there is a squared bracket `<>`, you should put in the appropriate information there and NOT include the brackets themselves. When there is no command line provided, this means the action can be done by point-and-click on the Github page. As usual, please let me know immediately if there is any question or concern. We are using the [Forking Workflow](https://medium.com/dev-genius/git-forking-workflow-bbba0226d39c).
 
 ### Set-up -- To be done only once
 
