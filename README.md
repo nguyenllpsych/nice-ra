@@ -37,4 +37,12 @@ Shared workspace for research assistants in the NICE research group who are supe
 
 5. In your forked repository on Github, create a pull request and add the message explaining the edits made, of the form "yyyymmdd: edits", such as "20201109: added detailed instructions to the readme file".
 
+6. You will receive an email that your pull request was accepted, i.e., the changes have been merged to the original Github. You can now delete the branch.  
+
+    6b. Switch back to your main branch by `git checkout main`.   
+
+    6c. Delete the 20201109 branch by `git branch -d <20201109>`.  
+
+    6d. Delete the 20201109 branch on your Github by `git push origin --delete branch-name`. 
+
 
