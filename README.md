@@ -43,6 +43,6 @@ Shared workspace for research assistants in the NICE research group who are supe
 
     6c. Delete the 20201109 branch by `git branch -d <20201109>`.  
 
-    6d. Delete the 20201109 branch on your Github by `git push origin --delete branch-name`. 
+    6d. Delete the 20201109 branch on your Github by `git push origin --delete <20201109>`. 
 
 
