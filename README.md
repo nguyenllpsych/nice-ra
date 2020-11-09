@@ -41,8 +41,8 @@ Shared workspace for research assistants in the NICE research group who are supe
 
     6b. Switch back to your main branch by `git checkout main`.   
 
-    6c. Delete the 20201109 branch by `git branch -d <20201109>`.  
+    6c. Delete the temporary branch by `git branch -d <yyyymmdd>`.  
 
-    6d. Delete the 20201109 branch on your Github by `git push origin --delete <20201109>`. 
+    6d. Delete the temporary branch on your Github by `git push origin --delete <yyyymmdd>`. 
 
 
