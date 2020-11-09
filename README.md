@@ -8,7 +8,7 @@ Shared workspace for research assistants in the NICE research group who are supe
 
 1. Fork the repository to create a copy on your own Github account.
 
-2. In your forked repository on Github, click on Code and copy the SSH link of the form `<git@github.com:...>`
+2. In your forked repository on Github, click on Code and copy the SSH link of the form `git@github.com:...`
 
 3. In your terminal, navigate to your preferred location using `cd <file_path>`, 
 
