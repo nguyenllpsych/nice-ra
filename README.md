@@ -10,16 +10,20 @@ Shared workspace for research assistants in the NICE research group who are supe
 
 2. In your forked repository on Github, click on Code and copy the SSH link of the form `git@github.com:...`
 
-3. In your terminal, navigate to your preferred location using `cd <file_path>`, 
+3. In your terminal, navigate to your preferred location using `cd <file_path>`. 
 
 4. Clone the repository to your machine using `git clone <SSH_link_from_2>`.  
+
+5. In your terminal, navigate to the repository `cd nice-ra`.
+
+6. Add the original repository as your upstream `git remote add upstream https://github.com/nguyenllpsych/nice-ra.git`.
 
   
 ### General workflow -- To be done every session
 
-1. In your terminal, make sure you're on the main branch by `git branch -a`. It should look like: *main (in green). If you're on a different branch, switch to the main branch by `git checkout main`.
+1. In your terminal, navigate to your repository (if not already there) and make sure you're on the main branch by `git branch -a`. It should look like: *main (in green). If you're on a different branch, switch to the main branch by `git checkout main`.
 
-2. Pull from the main Github page to make sure your local repository is up to date, using two commands (1) `git remote add upstream https://github.com/nguyenllpsych/nice-ra.git` then (2) `git pull upstream main`.  
+2. Pull from the main Github page to make sure your local repository is up to date by `git pull upstream main`.  
 
     2b. Push the update to your Github repository by `git push`. Check your Github repository on the browser and make sure it says "even with nguyenllpsych:main."
 
