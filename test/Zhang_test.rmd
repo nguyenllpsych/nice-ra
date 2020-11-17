@@ -1,0 +1,19 @@
+---
+title: "Zhang_test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Testing
+
+This is a test file for git training by Qilin Zhang.
+
+```{r}
+data <- c(1,2,3,4,5)
+hist(data)
+
+```
+
