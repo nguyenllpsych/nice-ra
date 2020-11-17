@@ -1,0 +1,81 @@
+---
+title: "NICE Lab: R Learning Phase 3"
+author: "Your Name"
+date: "10/27/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) #TRUE setting will show both your code and the output
+```
+
+INSTRUCTION [DELETE BEFORE SUBMITTING]: 
+
+RMarkdown is a great way to combine (1) codes, (2) output and visualization, and (3) your own write-up of the results.
+
+1. Put in the codes relevant to each question in the code chunk below (replace the current ##comment).
+
+2a. Click on the green arrow on the top right of each code chunk to check your output for that chunk. 
+  2b. Alternatively, you can run each individual line just like in an R script file.
+
+3. After each code chunk, you can summarize the results in your own words or add any other writing as needed. 
+
+4. At the end, click on "Knit" on the task bar. Et voila! Your own R-generated report.
+
+
+# Question 1
+```{r q1}
+##delete this line and put your code here
+```
+
+[DELETE BEFORE SUBMITTING]: Here, after each code chunk, you can include your own write-up or interpretation of the output.
+
+# Question 2
+```{r q2}
+##delete this line and put your code here
+```
+
+# Question 3
+```{r q3}
+##delete this line and put your code here
+```
+
+# Question 4
+```{r q4}
+##delete this line and put your code here
+```
+
+# Question 5
+```{r q5}
+##delete this line and put your code here
+```
+
+# Question 6
+```{r q6}
+##delete this line and put your code here
+```
+
+# Question 7
+```{r q7}
+##delete this line and put your code here
+```
+
+# Question 8
+```{r q8}
+##delete this line and put your code here
+```
+
+# Question 9
+```{r q9}
+##delete this line and put your code here
+```
+
+# Question 10
+```{r q10}
+##delete this line and put your code here
+```
+
+# Question 11
+```{r q11}
+##delete this line and put your code here
+```
