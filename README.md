@@ -49,3 +49,4 @@ Shared workspace for research assistants in the NICE research group who are supe
     6d. Delete the temporary branch on your Github by `git push origin --delete <yyyymmdd>`. 
 
 
+###### credit: [Justin Cho](https://github.com/c-h-o-c-h-o/100devs) and [Dhayaalan Raju](https://medium.com/dev-genius/git-forking-workflow-bbba0226d39c).
