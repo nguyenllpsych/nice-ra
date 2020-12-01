@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   warning = FALSE, # do not show warnings during codebook generation
   message = FALSE, # do not show messages during codebook generation
   error = FALSE, # do not interrupt codebook generation in case of errors,
-                # usually better for debugging
+                # TRUE for debugging
   echo = FALSE  # do not show R code
 )
 ggplot2::theme_set(ggplot2::theme_bw())
@@ -33,6 +33,9 @@ library(GGally) #reliability
 library(GPArotation) #reliability
 
 # > Data ----
+
+## use other read functions as appropriate for file type
+
 dict <- read.csv(file = "Dictionary.csv") #dictionary
 
 data <- read.csv(file = 'Data.csv', sep = "") #data
