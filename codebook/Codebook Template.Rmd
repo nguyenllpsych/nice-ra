@@ -1,0 +1,135 @@
+---
+title: "Codebook Template"
+author: "Linh Nguyen"
+date: "30-Nov-2020"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    code_folding: 'hide'
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, # do not show warnings during codebook generation
+  message = FALSE, # do not show messages during codebook generation
+  error = FALSE, # do not interrupt codebook generation in case of errors,
+                # usually better for debugging
+  echo = FALSE  # do not show R code
+)
+ggplot2::theme_set(ggplot2::theme_bw())
+```
+
+```{r cleaning code, include = FALSE}
+# META ==================================
+# > Library ----
+library(tidyverse) #data wrangling
+library(codebook) #codebook generation
+library(future) #reliability
+library(ufs) #reliability
+library(GGally) #reliability
+library(GPArotation) #reliability
+
+# > Data ----
+dict <- read.csv(file = "Dictionary.csv") #dictionary
+
+data <- read.csv(file = 'Data.csv', sep = "") #data
+
+# CLEANING ==============================
+
+# > Basic cleaning ----
+
+## Include more cleaning here as needed
+
+## Variable types 
+names <- dict %>% 
+  filter(type == "character") %>% 
+  pull(variable)
+data[,names] <- 
+  lapply(data[,names], as.character)
+
+names <- dict %>% 
+  filter(type == "factor") %>% 
+  pull(variable)
+data[,names] <- 
+  lapply(data[,names], as.numeric) #factor variables are coded as numeric for codebook purposes
+
+names <- dict %>% 
+  filter(type == "numeric") %>% 
+  pull(variable)
+data[,names] <- 
+  lapply(data[,names], as.numeric)
+
+rm(names)
+
+## Variable labels
+var_label(data) <- dict %>% 
+  dplyr::select(variable, label) %>% 
+  dict_to_list()
+
+## value labels demographics
+val_labels(data$sex) <- c("male" = 1,
+                          "female" = 2) 
+
+## value labels scales
+likert <- dict %>% 
+  filter (value_label == "1 = Definitely True, 2 = Probably True, 3 = Probably False, 4 = Definitely False") %>%
+  pull(variable)
+add_likert <- function(x) {
+  val_labels(x) <- c("Definitely True" = 1,
+                     "Probably True" = 2,
+                     "Probably False" = 3,
+                     "Definitely False" = 4)
+  x
+}
+data <- data %>%
+  mutate_at(likert, 
+            add_likert)  
+
+rm(likert, add_likert)
+
+## Reverse-scoring 
+reversed_items <- dict %>%  #make a list of reversed items
+  filter (keying == -1) %>% 
+  pull(variable)
+
+data <- data %>%  #reverse values in data
+  mutate_at(reversed_items,
+            reverse_labelled_values)
+
+rm(reversed_items)
+
+# > Scale scoring ----
+
+## create list of items
+extra <- dict %>% 
+  filter (scale == "Extraversion") %>% 
+  pull(variable)
+
+## reorder items within list so reversed items are not first
+## not always necessary
+extra <- extra[c(2,1,3:20)]
+
+## create aggregated variables 
+data$extra <- data %>% 
+  dplyr::select(all_of(extra)) %>% 
+  aggregate_and_document_scale()
+
+## variable label for aggregated variables 
+var_label(data$extra) <- "Extraversion - 20 BFAS items aggregated by rowMeans"
+
+rm(extra)
+```
+
+```{r codebook}
+codebook_data <- data %>% #select only the variables to display for codebook
+  select(-ID)
+
+metadata(codebook_data)$name <- "A short name for the data"
+metadata(codebook_data)$description <- "Longer description of the dataset"
+metadata(codebook_data)$temporalCoverage <- "Timespan of data collection" 
+
+codebook(codebook_data, metadata_json = F, metadata_table = F) #generate codebook, excluding some messy meta-data
+```
