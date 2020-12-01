@@ -1,0 +1,114 @@
+---
+title: "NICE Lab: R Learning Phase 3"
+author: "Jocelyn Li"
+date: "11/30/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) #TRUE setting will show both your code and the output
+```
+
+# Question 1
+```{r q1}
+library(psych)
+library(summarytools)
+library(dplyr)
+library(ggplot2)
+```
+
+# Question 2
+```{r q2}
+eid_2016 <- read.csv("EID_Data_MCAE2016.csv")
+dim(eid_2016)
+names(eid_2016)
+```
+Notes: I manually imported the dataset and changed the name. That's my favorite way to do that.
+
+# Question 3
+```{r q3}
+summarytools::freq(eid_2016)
+summarytools::descr(eid_2016)
+```
+
+# Question 4
+```{r q4}
+eid2_2016 <- eid_2016 %>% 
+  dplyr::mutate(swl_mean = (swl01+swl02+swl03+swl04+swl05)/5, 
+                exploration_mean = (meim01+meim02+meim04+meim08+meim10)/5,
+                commitment_mean = (meim03+meim05+meim06+meim07+meim09+meim11+meim12)/7)
+eid_mean <- eid2_2016 %>%
+  dplyr::select(swl_mean, exploration_mean, commitment_mean)
+View(eid_mean)
+summarytools::descr(eid_mean)
+```
+
+# Question 5
+```{r q5}
+eid_mean %>% psych::corr.test()
+psych::corr.test(eid_mean$swl_mean,eid_mean$exploration_mean)
+```
+
+# Question 6
+```{r q6}
+mod_eid=lm(swl_mean~1+exploration_mean+commitment_mean, data = eid_mean)
+summary(mod_eid)
+confint(mod_eid)
+```
+
+# Question 7
+```{r q7}
+plot(swl_mean~exploration_mean, data = eid_mean, main = "scatterplot of exploration mean and satisfaction mean", xlab = "mean exploration of Multigroup Ethnic Identity Measure", ylab = "mean satisfaction with life" )
+plot(swl_mean~commitment_mean, data = eid_mean, main = "scatterplot of commitment mean and satisfaction mean", xlab = "mean commitment of Multigroup Ethnic Identity Measure", ylab = "mean satisfaction with life" )
+```
+
+# Question 8
+```{r q8}
+t.test(exploration_mean ~ usborn, data = eid2_2016)
+t.test(commitment_mean ~ usborn, data = eid2_2016)
+t.test(swl_mean ~ usborn, data = eid2_2016)
+
+t.test(exploration_mean ~ firstgen, data = eid2_2016)
+t.test(commitment_mean ~ firstgen, data = eid2_2016)
+t.test(swl_mean ~ firstgen, data = eid2_2016)
+```
+
+# Question 9
+```{r q9}
+#usborn and three variables 
+bp_born_expl <- ggplot2::ggplot(eid2_2016, aes(usborn, exploration_mean)) +
+  geom_boxplot()
+bp_born_expl
+bp_born_com <- ggplot2::ggplot(eid2_2016, aes(usborn, commitment_mean)) +
+  geom_boxplot()
+bp_born_com
+bp_born_swl <- ggplot2::ggplot(eid2_2016, aes(usborn, swl_mean)) +
+  geom_boxplot()
+bp_born_swl
+
+#firstgeneration and three variables 
+bp_fg_expl <- ggplot2::ggplot(eid2_2016, aes(firstgen, exploration_mean)) +
+  geom_boxplot()
+bp_fg_expl
+bp_fg_com <- ggplot2::ggplot(eid2_2016, aes(firstgen, commitment_mean)) +
+  geom_boxplot()
+bp_fg_com
+bp_fg_swl <- ggplot2::ggplot(eid2_2016, aes(firstgen, swl_mean)) +
+  geom_boxplot()
+bp_fg_swl
+```
+
+# Question 10
+```{r q10}
+anova(lm(exploration_mean ~ firstgen*usborn, data=eid2_2016))
+anova(lm(commitment_mean ~ firstgen*usborn, data=eid2_2016))
+anova(lm(swl_mean ~ firstgen*usborn, data=eid2_2016))
+```
+
+# Question 11
+```{r q11}
+boxplot(exploration_mean ~ firstgen * usborn, data=eid2_2016)
+boxplot(commitment_mean ~ firstgen * usborn, data=eid2_2016)
+boxplot(swl_mean ~ firstgen * usborn, data=eid2_2016)
+```
+Notes: Practicing really help me understand more deeply rather than just going through tutorials does. I spent a lot of time exploring on the internet and searched for other examples to help me figure out what do those commend really mean. R markdown is a very cool tool, making things tidy and neat.
