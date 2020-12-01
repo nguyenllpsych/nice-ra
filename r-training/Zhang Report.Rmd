@@ -1,0 +1,230 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(readr)
+EID_Data_MCAE2016 <- read_csv("D:/Work/Psychology Research/NICE Lab/EID_Data_MCAE2016.csv")
+```
+
+## R Markdown
+
+Note:
+The dataset includes the following variables (20 in all): 1) a unique ID for each participant,
+2) whether the participant was born in the U.S. (yes/no), 3) whether the participant was the
+first in their family to attend college (yes/no), 4) the 12-item Multigroup Ethnic Identity
+Measure (MEIM; Roberts et al., 1999), and 5) the 5-item Satisfaction with Life Scale (SWL;
+Diener et al., 1999).
+
+For the MEIM and SWL only the raw items are included, not scale scores. Scoring
+instructions are included on the OSF page. There you will also find a codebook that
+describes all variables and possible values, as well as a R script file that includes a key for
+the exercises (but don’t look at that now!). So you now have a dataset and a description of
+that dataset. You are ready to go. Follow the instructions below to do some basic data
+wrangling, analyses, and plots.
+
+```{r}
+
+
+
+"Begin by installing (as needed) and loading the following packages: summarytools,
+dplyr, psych, ggplot2. You will also see references below to “base R.” This means that
+the function is built into R and does not require a specific package to run. That reminds
+me of another law:
+Fourth Law of Learning R: There is no “right” way to do anything in R. There are always
+at least two—and sometimes many more—different packages that can perform the
+same function.
+Indeed, you could complete this lesson using an entirely different set of packages. Good
+to know for now, and play around as you want, but if you are just getting started I
+suggest using the ones I listed above (besides, I only made a key for using those
+packages, so you can’t cheat if you use different ones)."
+
+library(dplyr)
+library(psych)
+library(summarytools)
+library(ggplot2)
+library(car)
+attach(EID_Data_MCAE2016)
+```
+
+```{r}
+
+#Read in the raw .csv data file. Do some checks to make sure that everything looks as it should and that the data were read in properly.
+
+##View(EID_Data_MCAE2016)
+
+```
+
+```{r}
+#Get to know the basics of your data by using summarytools to examine the frequencies and descriptive statistics for all items.
+
+##Frequence for entire dataset
+freq(EID_Data_MCAE2016)
+
+##Descriptive analysis for entire dataset
+descr(EID_Data_MCAE2016)
+
+```
+
+```{r}
+#Use dplyr to calculate scale scores for the MEIM and SWL according to the scoring instructions and store them as new variables in a new dataset. Use summarytools to check the descriptive statistics of the new variables.
+
+##EID Exploration Score
+EID_Data_MCAE2016$Meim_Exploration_Score <- (as.numeric((EID_Data_MCAE2016$meim01+EID_Data_MCAE2016$meim02+EID_Data_MCAE2016$meim04+EID_Data_MCAE2016$meim08+EID_Data_MCAE2016$meim10)/5,names="Meim_Exploration_Score"))
+
+##EID Commitment Score
+EID_Data_MCAE2016$Meim_Commitment_Score <- 
+(as.numeric((EID_Data_MCAE2016$meim03+EID_Data_MCAE2016$meim05+EID_Data_MCAE2016$meim06+EID_Data_MCAE2016$meim07+EID_Data_MCAE2016$meim09+EID_Data_MCAE2016$meim11+EID_Data_MCAE2016$meim12)/7,names="Meim_Commitment_Score"))
+
+##SWL
+EID_Data_MCAE2016$SWL_Score <- (as.numeric((EID_Data_MCAE2016$swl01+EID_Data_MCAE2016$swl02+EID_Data_MCAE2016$swl03+EID_Data_MCAE2016$swl04+EID_Data_MCAE2016$swl05)/5,names="SWL_Score"))
+
+##Descriptive analysis
+descr(EID_Data_MCAE2016[c("Meim_Exploration_Score","Meim_Commitment_Score","SWL_Score")])
+
+```
+
+```{r}
+#Use the psych package to create a correlation matrix consisting of the three scale scores. Then run a command to get only the correlation between MEIM exploration and SWL.
+
+## 3 constructs combined
+corPlot(EID_Data_MCAE2016[c("Meim_Exploration_Score","Meim_Commitment_Score","SWL_Score")])
+
+## MEIM exploration and SWL
+cor.plot(EID_Data_MCAE2016[c("Meim_Exploration_Score","SWL_Score")])
+```
+
+```{r}
+#Run a multiple regression analysis in base R with the two MEIM subscales predicting SWL. Request confidence intervals for the estimates.
+
+##Multi-regression MEIM_Commitment and MEIM_Exploration predict SWL
+Multi_regression_model <- lm(EID_Data_MCAE2016$SWL_Score~EID_Data_MCAE2016$Meim_Commitment_Score+EID_Data_MCAE2016$Meim_Exploration_Score)
+summary(Multi_regression_model)
+```
+
+```{r}
+#Create two scatterplots using ggplot2, one for MEIM exploration and SWL and one for MEIM commitment and SWL. And labels to the axes, change the scales, and add a fit line.
+
+##MEIM exploration and SWL
+ggplot(EID_Data_MCAE2016, aes(x = EID_Data_MCAE2016$Meim_Exploration_Score,y = EID_Data_MCAE2016$SWL_Score),)+
+  geom_point()+
+  labs(x='MEIM_exploration_Score', y='SWL_Score',title = 'MEIM exploration and SWL')+
+  geom_abline()
+
+##MEIM commitment and SWL
+ggplot(EID_Data_MCAE2016, aes(x = EID_Data_MCAE2016$Meim_Commitment_Score,y = EID_Data_MCAE2016$SWL_Score),)+
+  geom_point()+
+  labs(x='MEIM_Commitment_Score', y='SWL_Score',title = 'MEIM commitment and SWL')+
+  geom_abline()
+
+```
+
+```{r}
+#Run two sets of independent samples t-tests in base R on the three scales scores, one set for Born in the U.S and one set for First Generation College Student (so six t-tests total).
+
+##Exploration_USborn
+t.test(EID_Data_MCAE2016$Meim_Exploration_Score~EID_Data_MCAE2016$usborn,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+
+##Commitment_USborn
+t.test(EID_Data_MCAE2016$Meim_Commitment_Score~EID_Data_MCAE2016$usborn,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+
+##SWL_USborn
+t.test(EID_Data_MCAE2016$SWL_Score~EID_Data_MCAE2016$usborn,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+
+##Exploration_FirstGen
+t.test(EID_Data_MCAE2016$Meim_Exploration_Score~EID_Data_MCAE2016$firstgen,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+
+##Commitment_FirstGen
+t.test(EID_Data_MCAE2016$Meim_Commitment_Score~EID_Data_MCAE2016$firstgen,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+
+##SWL_FirstGen
+t.test(EID_Data_MCAE2016$SWL_Score~EID_Data_MCAE2016$firstgen,mu = 0,paired = FALSE,var.equal = FALSE,conf.level = 0.95)
+```
+
+```{r}
+#Create boxplots using ggplot2 showing the three scale score distributions for Born in the U.S and First Generation College Student (so again, six plots).
+
+##Exploration_USborn
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$Meim_Exploration_Score,x = EID_Data_MCAE2016$usborn),)+
+  geom_boxplot()+
+  labs(y='MEIM_exploration_Score', x='Whether born in the US')
+  
+##Commitment_USborn
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$Meim_Commitment_Score,x = EID_Data_MCAE2016$usborn),)+
+  geom_boxplot()+
+  labs(y='Meim_Commitment_Score', x='Whether born in the US')
+
+##SWL_USborn
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$SWL_Score,x = EID_Data_MCAE2016$usborn),)+
+  geom_boxplot()+
+  labs(y='SWL_Score', x='Whether born in the US')
+
+##Exploration_FirstGen
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$Meim_Exploration_Score,x = EID_Data_MCAE2016$firstgen),)+
+  geom_boxplot()+
+  labs(y='MEIM_exploration_Score', x='Whether is first generation student')
+
+##Commitment_FirstGen
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$Meim_Commitment_Score,x = EID_Data_MCAE2016$firstgen),)+
+  geom_boxplot()+
+  labs(y='Meim_Commitment_Score', x='Whether is first generation student')
+
+##SWL_FirstGen
+ggplot(EID_Data_MCAE2016, aes(y = EID_Data_MCAE2016$SWL_Score,x = EID_Data_MCAE2016$firstgen),)+
+  geom_boxplot()+
+  labs(y='SWL_Score', x='Whether is first generation student')
+
+```
+
+```{r}
+#Run a 2-way ANOVA in base R for Born in the U.S x First Generation College Student predicting the three scales scores (so three ANOVAs).
+
+##ANOVA_Exploration_USborn$Firstgen
+ANOVA_Exploration_USborn_Firstgen <- lm(Meim_Exploration_Score ~ usborn + firstgen,data = EID_Data_MCAE2016)
+Anova(ANOVA_Exploration_USborn_Firstgen,type="II")
+
+##ANOVA_Commitment_USborn$Firstgen
+ANOVA_Commitment_USborn_Firstgen <- lm(Meim_Commitment_Score ~ usborn + firstgen,data = EID_Data_MCAE2016)
+Anova(ANOVA_Commitment_USborn_Firstgen,type="II")
+
+##ANOVA_SWL_USborn$Firstgen
+ANOVA_SWL_USborn_Firstgen <- lm(SWL_Score ~ usborn * firstgen,data = EID_Data_MCAE2016)
+Anova(ANOVA_SWL_USborn_Firstgen,type="III")
+
+##post.hoc:
+library("multcomp")
+library("emmeans")
+library("lsmeans")
+library("multcompView")
+
+post_hoc_SWL_USborn_Firstgen <- lsmeans(ANOVA_SWL_USborn_Firstgen, 
+                                 pairwise ~ usborn * firstgen, 
+                                 adjust= "tukey")
+post_hoc_SWL_USborn_Firstgen
+
+
+```
+
+```{r}
+#Create boxplots using ggplot2 showing the three scale score distributions for Born in the U.S x First Generation College Student (so this time only three plots!).
+
+##Exploration_USborn$Firstgen
+ggplot(aes(y=Meim_Exploration_Score, x=usborn, fill=firstgen), data= EID_Data_MCAE2016)+geom_boxplot()+theme_bw()
+
+##Commitment_USborn$Firstgen
+ggplot(aes(y=Meim_Commitment_Score, x=usborn, fill=firstgen), data= EID_Data_MCAE2016)+geom_boxplot()+theme_bw()
+
+##SWL_USborn$Firstgen
+ggplot(aes(y=SWL_Score, x=usborn, fill=firstgen), data= EID_Data_MCAE2016)+geom_boxplot()+theme_bw()
+
+  
+
+```
+
+```{r}
+#Write a summary report describing everything you did in steps 1-11, embedding figures and using APA style to report the results of your tests. Feel free to make tables as well.
+
+```
