@@ -5,17 +5,19 @@ Shared workspace for research assistants in the NICE research group who are supe
 
 ### Set-up -- To be done once
 
-1. Fork the repository to create a copy on your own Github account.
+1. Set up Git following the guide on the [Odin Project](https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/setting-up-git).
 
-2. In your forked repository on Github, click on Code and copy the SSH link of the form `git@github.com:...`
+2. Fork the repository to create a copy on your own Github account.
 
-3. In your terminal, navigate to your preferred location using `cd <file_path>`. 
+3. In your forked repository on Github, click on Code and copy the SSH link of the form `git@github.com:...`
 
-4. Clone the repository to your machine using `git clone <SSH_link_from_2>`.  
+4. In your terminal, navigate to your preferred location using `cd <file_path>`. 
 
-5. In your terminal, navigate to the repository `cd nice-ra`.
+5. Clone the repository to your machine using `git clone <SSH_link_from_2>`.  
 
-6. Add the original repository as your upstream `git remote add upstream https://github.com/nguyenllpsych/nice-ra.git`.
+6. In your terminal, navigate to the repository `cd nice-ra`.
+
+7. Add the original repository as your upstream `git remote add upstream https://github.com/nguyenllpsych/nice-ra.git`.
 
   
 ### General workflow -- To be done every session
