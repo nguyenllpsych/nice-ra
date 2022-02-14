@@ -24,7 +24,7 @@ data$conscientiousness <- data %>%
   rowMeans(na.rm = TRUE)
 View(data)
 
-##Removing the column "consci" how?
+
 
 ##U-MICS educational commitment score? (find the mean score?)
 umics_commitment <- dict %>%
@@ -44,6 +44,25 @@ t.test(formula = umics_commitment ~ usborn,
        na.rm = TRUE,
        
        alternative = 'two.sided')
-     
+
+#### Regression analysis for conscientiouness and UMICs
+test_result <- lm(formula = data$UMICS_COMMIT ~ data$conscientiousness,
+                    data = data)
+
+summary(test_result)
 
 
+## creating scatter plot to visually exam the correlation
+
+plot(x = data$conscientiousness,                    # x-coordinates
+     y = data$UMICS_COMMIT,                         # y-coordinates
+     type = "p",                       # Just draw points (no lines)
+     main = "Conscientiousness",
+     xlab = "Educational Commitment",
+     ylab = "Conscientiousness",
+     xlim = c(1, 5),                  # Min and max values for x-axis
+     ylim = c(1, 5),                  # Min and max values for y-axis
+     col = gray(.0, .1),                     # Color of the points
+     pch = 16,                         # Type of symbol (16 means Filled circle)
+     cex = 1)                           # Size of the symbols
+abline(test_result, col = 'blue') 
