@@ -50,7 +50,6 @@ mean(data$impulse, na.rm = TRUE)
 sd(data$impulse, na.rm = TRUE)
 hist(data$impulse)
 
-
 # risk-taking behaviors
 mean(data$risk, na.rm = TRUE)
 sd(data$risk, na.rm = TRUE)
@@ -66,4 +65,3 @@ summary(ss_impulse)
 # regression analysis of ss and risk
 ss_risk <- lm(data$risk ~ data$ss, data)
 summary(ss_risk)
-
