@@ -54,3 +54,14 @@ hist(data$impulse)
 mean(data$risk, na.rm = TRUE)
 sd(data$risk, na.rm = TRUE)
 hist(data$risk)
+summary(data$risk)
+
+### Analyses ###
+
+# regression analysis of ss and impulse
+ss_impulse <- lm(data$impulse ~ data$ss, data) 
+summary(ss_impulse)
+
+# regression analysis of ss and risk
+ss_risk <- lm(data$risk ~ data$ss, data)
+summary(ss_risk)
