@@ -31,7 +31,6 @@ ssfr_persis <- lm(data$persis ~ data$ssfr, data)
 summary(ssfa_persis)
 summary(ssfr_persis)
 
-
 #Plot regression results
 install.packages("ggplot2")
 library(ggplot2)
