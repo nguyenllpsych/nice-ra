@@ -1,5 +1,6 @@
 library(rio)
 library(dplyr)
+library(ggplot2)
 
 setwd("~/Desktop/nice-ra/projects/2022-EB")
 
@@ -62,6 +63,33 @@ summary(data$risk)
 ss_impulse <- lm(data$impulse ~ data$ss, data) 
 summary(ss_impulse)
 
+# scatterplot of ss and impulse
+ggplot(data, aes(ss, impulse)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
 # regression analysis of ss and risk
 ss_risk <- lm(data$risk ~ data$ss, data)
 summary(ss_risk)
+
+# scatterplot of ss and risk
+ggplot(data, aes(ss, risk)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+### APA format ###
+
+# APA format for ss and impulse
+# A simple linear regression was calculated to predicted impulsivity
+#   based on social support. A significant regression equation was 
+#   found (F(1, 255) = 8.832, p = 0.003242), with an R^2 of 0.03348. 
+#   There was a decrease of 0.21403 in impulsivity for each unit
+#   increase of social support
+
+# APA format for ss and risk
+# A simple linear regression was calculated to predicted risk-taking behavior
+#   based on social support. A nonsignificant regression equation was 
+#   found (F(1, 255) = 0.2065, p = 0.6499), with an R^2 of 0.0008091. 
+#   There was a decrease of 0.02536 in risk-taking behavior for each unit
+#   increase of social support
+
