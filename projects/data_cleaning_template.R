@@ -14,6 +14,13 @@ View(data)
 # import the dictionary
 dict <- rio::import(file = "Dictionary.xlsx")
 
+#### RECODE VARIABLES ####
+# recode yes/no and binary questions
+# e.g., gender: 1 -> 0 and 2 -> 1
+# 0 = male, 1 = female
+data <- data %>% 
+  mutate(gender_f = as.numeric(gender == 2))
+
 #### CREATE SCALE SCORES ####
 
 # create a new variable that is the mean of all your items
