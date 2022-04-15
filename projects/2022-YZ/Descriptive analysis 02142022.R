@@ -1,8 +1,8 @@
 install.packages("rio")
 install.packages("dplyr")
 library(rio)
-library(dplyr)
 install_formats()
+library(dplyr)
 
 ####
 data<- rio::import(file = "NICE_data_YZ.sav")
@@ -50,14 +50,17 @@ test_result <- lm(formula = data$UMICS_COMMIT ~ data$conscientiousness,
                     data = data)
 
 summary(test_result)
+#### Interpretation of the result in APA format:
+# A simple linear regression was calculated to predict Educational Commitment from U-MICs based on Conscientiousness.
+#A significant regression equation was found (F(1, 255) = 30.85, p < .000), with an R^2 of .108. There was an increase of number in 
+# Educational Commitment for each unit increase of Conscientiousness.
 
-
-## creating scatter plot to visually exam the correlation
+## creating scatter plot to visually exam the correlation (Done before)
 
 plot(x = data$conscientiousness,                    # x-coordinates
      y = data$UMICS_COMMIT,                         # y-coordinates
      type = "p",                       # Just draw points (no lines)
-     main = "Conscientiousness",
+     main = "Conscientiousness predicting High Educational Commitment",
      xlab = "Educational Commitment",
      ylab = "Conscientiousness",
      xlim = c(1, 5),                  # Min and max values for x-axis
@@ -65,4 +68,4 @@ plot(x = data$conscientiousness,                    # x-coordinates
      col = gray(.0, .1),                     # Color of the points
      pch = 16,                         # Type of symbol (16 means Filled circle)
      cex = 1)                           # Size of the symbols
-abline(test_result, col = 'blue') 
+abline(test_result, col = 'red') 

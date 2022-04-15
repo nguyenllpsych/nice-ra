@@ -31,3 +31,14 @@ ssfr_persis <- lm(data$persis ~ data$ssfr, data)
 summary(ssfa_persis)
 summary(ssfr_persis)
 
+#Plot regression results
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(data, aes(ssfa, persis)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(data, aes(ssfr, persis)) +
+  geom_point() +
+  geom_smooth(method = "lm")
