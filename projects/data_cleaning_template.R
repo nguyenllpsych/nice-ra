@@ -8,11 +8,11 @@ library(dplyr) # for data cleaning
 getwd()
 
 # import the data
-data <- rio::import(file = "NICE_data_YZ.sav")
+data <- rio::import(file = "datafile.sav")
 View(data)
 
 # import the dictionary
-dict <- rio::import(file = "Dictionary.xlsx")
+dict <- rio::import(file = "dictionary.xlsx")
 
 #### RECODE VARIABLES ####
 # recode yes/no and binary questions
@@ -20,10 +20,18 @@ dict <- rio::import(file = "Dictionary.xlsx")
 # 0 = male, 1 = female
 data <- data %>% 
   mutate(gender_f = as.numeric(gender == 2))
+# more sensitively, we can use dplyr::case_when()
+data <- data %>%
+  mutate(gender_f = case_when(
+    gender == 1 ~ 0,
+    gender == 2 ~ 1,
+    gender == 3 ~ NA_real_ # NA for real numbers
+  ))
 
 #### CREATE SCALE SCORES ####
 
 # create a new variable that is the mean of all your items
+# remember to reverse score items!
 
 # THE SLOW WAY
 # will have to list out all variables for the scale
