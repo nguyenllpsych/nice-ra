@@ -19,7 +19,7 @@ dict <- rio::import(file = "dictionary_YZ.xlsx")
 #### CLEANING ####
 # create scale scores etc. as needed #
 
-#### REGRESSION ####
+#### SIMPLE REGRESSION ####
 
 # create the linear model
 # if there are multiple hypotheses, create a separate model for each
@@ -28,19 +28,10 @@ simple_regression <- lm(outcome_variable ~ predictor, data)
 # see model results
 summary(simple_regression)
 
-#### MODERATOR ####
-
-# add an interaction term
-int_regression <- lm(outcome_variable ~ predictor*moderator, data)
-
-# see model results
-summary(int_regression)
-
-#### PLOT ####
-
-# plot the pair of variable
-# this tells R what to plot:
-ggplot(data, aes(predictor, outcome_variable)) +
+# visualize model results
+ggplot(data = data_name, 
+       # first tell R what variables to plot:
+       aes(x = predictor, y = outcome_variable)) +
   
   # add a scatterplot:
   geom_point() +
@@ -48,7 +39,25 @@ ggplot(data, aes(predictor, outcome_variable)) +
   # add a regression line:
   geom_smooth(method = "lm")
 
-# plot the interaction effects
+#### MULTIPLE REGRESSION ####
+
+# if there are multiple predictors, add them to the formula!
+multiple_regression <- lm(outcome_variable ~ pred1 + pred2 + pred.etc,
+                          data = data_name)
+
+# see model results
+summary(multiple_regression)
+
+#### MODERATION ####
+
+# add an interaction term
+int_regression <- lm(outcome_variable ~ predictor * moderator, 
+                     data = data_name)
+
+# see model results
+summary(int_regression)
+
+# visualize the interaction effects
 plot_model(int_regression, type = "int",
            axis.title = c("x-axis", "y-axis"),
            title = "my plot title")
