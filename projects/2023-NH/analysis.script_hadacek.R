@@ -1,19 +1,18 @@
-#######################
-# 2/27/23
+###
+# 3/27/23
 # Nick Hadacek
 # PSY4994V Final Project
-#######################
+###
 
-### LOADING PACKAGES ###
+# LOADING PACKAGES ####
 
 install.packages("ggplot2") #for data visualization
 install.packages("dplyr") #for data management
 install.packages("cowplot") #combining graphs if needed
 install.packages("psych") #easier correlation
 install.packages("apaTables") #APA-ready tables
-install.packages("haven") #i don't remember what this was for
-install.packages("readr") #this either
 install.packages("rio") #for importing data
+install.packages("sjPlot") #ggplot2 add-on
 
 library(ggplot2)
 library(dplyr)
@@ -23,6 +22,7 @@ library(apaTables)
 library(haven)
 library(readr)
 library(rio)
+library(sjPlot)
 
 sessionInfo()
 #R version 4.2.2
@@ -38,19 +38,19 @@ sessionInfo()
 getwd()
 #C:/Users/nickh/OneDrive/Desktop/Working Directory
 
-### IMPORTING DATA ###
+# IMPORTING DATA ####
 
-#import data
+# import data 
 data_peer <- rio::import(file = "data_peer.sav")
 data_self <- rio::import(file = "data_self.sav")
 
-#import dictionary
+# import dictionary 
 dict_peer <- rio::import(file = "dict_peer.xlsx")
 dict_self <- rio::import(file = "dict_self.xlsx")
 
-### DATA CLEANING AND ORGANIZATION ###
+# DATA CLEANING AND ORGANIZATION ####
 
-#creating peer conscientiousness variable
+# creating peer conscientiousness variable 
 consci_items_peer <- dict_peer %>% 
   filter(scale == "BFAS Conscientiousness") %>% 
   pull(variable)
@@ -58,12 +58,12 @@ data_peer$consci_peer <- data_peer %>%
   select(all_of(consci_items_peer)) %>% 
   rowMeans(na.rm = TRUE)
 
-#averaging informants responding about same participant
+# averaging informants responding about same participant 
 peer_group <- data_peer %>% group_by(ID) %>% 
   summarise(consci_peer = mean(data_peer$consci_peer,na.rm = TRUE),
             .groups = 'drop')
 
-#creating self conscientiousness variable
+# creating self conscientiousness variable 
 consci_items_self <- dict_self %>% 
   filter(scale == "BFAS Conscientiousness") %>% 
   pull(variable)
@@ -71,7 +71,7 @@ data_self$consci_self <- data_self %>%
   select(all_of(consci_items_self)) %>% 
   rowMeans(na.rm = TRUE)
 
-#creating pid rigid perfectionism variable
+# creating pid rigid perfectionism variable 
 pid_items <- dict_self %>% 
   filter(scale == "PID Miscellaneous") %>% 
   pull(variable)
@@ -79,7 +79,7 @@ data_self$pid <- data_self %>%
   select(all_of(pid_items)) %>% 
   rowMeans(na.rm = TRUE)
 
-#creating pil variable
+# creating pil variable 
 pil_items <- dict_self %>% 
   filter(scale == "PIL Purpose in Life") %>% 
   pull(variable)
@@ -87,7 +87,7 @@ data_self$pil <- data_self %>%
   select(all_of(pil_items)) %>% 
   rowMeans(na.rm = TRUE)
 
-#creating neuroticism variable
+# creating neuroticism variable 
 neuro_items <- dict_self %>% 
   filter(scale == "BFAS Neuroticism") %>% 
   pull(variable)
@@ -95,17 +95,57 @@ data_self$neuro <- data_self %>%
   select(all_of(neuro_items)) %>% 
   rowMeans(na.rm = TRUE)
 
-#creating withdrawal variable
+# creating withdrawal variable 
 withdraw_items <- dict_self %>% 
-  filter(scale == "BFAS Withdrawal") %>% 
+  filter(subscale == "BFAS Withdrawal") %>% 
   pull(variable)
 data_self$withdraw <- data_self %>% 
   select(all_of(withdraw_items)) %>% 
   rowMeans(na.rm = TRUE)
 
-#merging dataframes
+# merging dataframes 
 jointdataset <- merge(data_self, peer_group, by = 'ID')
 
-#creating conscientiousness difference score
+# creating conscientiousness difference score 
 jointdataset <- jointdataset %>% 
   dplyr::mutate(consci_dif = (consci_peer - consci_self))
+
+# REGRESSION ANALYSIS ####
+
+## simple regression ####
+simple_regression <- lm(consci_dif ~ pid, data = jointdataset)
+summary(simple_regression)
+#interpreting
+  #consci_dif=(-.25410)pid+.68551
+  #p=1.523e-06
+  #For every increase in rigid perfectionism of 1, the difference between 
+  #peer-reported conscientiousness and self-reported conscientiousness decreases 
+  #by -0.2541. Given that rigid perfectionism ranges from 1-4 and 
+  #conscientiousness ranges from 1-5, this is a moderate-sized correlation 
+  #(r=-0.3189428). The result is also statistically significant (p<.05).
+
+#visualize
+ggplot(jointdataset, aes(pid, consci_dif)) +
+  geom_point(color = "#f1c232") +
+  geom_smooth(method = "lm", color = "#710c0c") +
+  labs(title = "Multiple Regression", x = "Rigid Perfectionism", 
+       y = "Conscientiousness Difference Score")
+
+#correlation test
+cor(jointdataset$consci_dif, jointdataset$pid, use = "pairwise")
+
+## multiple regression ####
+#multiple_regression <- lm(outcome_variable ~ pred1 + pred2 + pred.etc, data = data)
+#for moderator, use * instead of +
+
+multiple_regression <- lm(consci_dif ~ pid + pil + neuro + withdraw, 
+                          data = jointdataset)
+summary(multiple_regression)
+#interpreting
+  #consci_dif=(-.33045)pid+1.79231
+  #p=2.11e-10
+  #For every increase in rigid perfectionism of 1, the difference between
+  #peer-reported conscientiousness and self-reported conscientiousness decreases
+  #by -.33045 (when purpose in life, neuroticism, and withdrawal are controlled
+  #for). This result is significant (p<.05) and demonstrates an even stronger
+  #relationship than the simple regression model.
