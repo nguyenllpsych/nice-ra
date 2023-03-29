@@ -1,0 +1,35 @@
+variable,label,scale,subscale,keying,type,value_labels
+ID,Participant ID,,,,factor,
+gender,Gender,,,,factor,1 Male 2 Female 3 Other identification
+gender_o,Gender - Open-ended,,,,character,
+age,Age,,,,numeric,
+year,Year in School,,,,factor,1 First year 2 Second year 3 Third year 4 Fourth year 5 Fifth year or above
+transfer,Transfer Student,,,,factor,0 No 1 Yes
+usborn,Born in the United States,,,,factor,0 No 1 Yes
+yrslived,Years Living in the United States,,,,numeric,
+momus,Mother Born in the United States,,,,factor,0 No 1 Yes
+momedu,Mother's Level of Schooling,,,,factor,1 No school 2 Elementary school 3 Middle school/junior high 4 Some high school 5 High school diploma 6 Associates degree (2 year) 7 Bachelor's degree (4 year) 8 Master's degree 9 Doctorate or professional degree
+momemploy,Mother Currently Employed,,,,factor,1 No 2 Yes 3 Between jobs 4 Retired 5 Homemaker 6 Other
+dadus,Father Born in the United States,,,,factor,0 No 1 Yes
+dadedu,Father's Level of Schooling,,,,factor,1 No school 2 Elementary school 3 Middle school/junior high 4 Some high school 5 High school diploma 6 Associates degree (2 year) 7 Bachelor's degree (4 year) 8 Master's degree 9 Doctorate or professional degree
+dademploy,Father Currently Employed,,,,factor,1 No 2 Yes 3 Between jobs 4 Retired 5 Homemaker 6 Other
+via002,I have taken frequent stands in the face of strong opposition.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via003,I never quit a task before it is done.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via004,I always keep my promises.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via009,I always finish what I start.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via020,I never hesitate to publicly express an unpopular opinion.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via021,I believe honesty is the basis for trust.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via036,I must stand up for what I believe even if there are negative results.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via037,I finish things despite obstacles in the way.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via046,I love what I do.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via051,My promises can be trusted.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via058,I look forward to each new day.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via064,I always stand up for my beliefs.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via065,I do not give up.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via066,I am true to my own values.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via072,I have lots of energy.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via090,I stick with whatever I decide to do.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via111,I awaken with a sense of excitement about the day's possibilities.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via114,I am a brave person.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via115,Others trust me to keep their secrets.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via120,People describe me as full of zest.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree

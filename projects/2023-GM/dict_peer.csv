@@ -1,0 +1,31 @@
+variable,label,scale,subscale,keying,type,value_labels
+age,What is your age?,,,,numeric,
+gender,What is your gender? - Selected Choice,,,,factor,1 Male 2 Female 3 Other identification
+gender_o,What is your gender? - Other identification - Text,,,,character,
+relatp,Which title best describes your relationship to the person who nominated you to take this survey? - Selected Choice,,,,factor,1 Family 2 Friend 3 Roommate 4 Teacher/Mentor 5 Other
+relatp_o,Which title best describes your relationship to the person who nominated you to take this survey? - Other - Text,,,,character,
+gender_target,Which gender best describes the person who nominated you to take this survey?,,,,factor,1 Male 2 Female
+knowrelatp,How well you know this person?,,,,numeric,1 Not well at all 2 Somewhat well 3 Well 4 Quite well 5 Extremely well
+likerelatp,How much do you like this person?,,,,numeric,1 Strongly dislike 2 Dislike somewhat 3 Neutral 4 Like somewhat 5 Like a lot 6 A best friend
+ID,Participant ID,,,,factor,
+PeerID,Peer ID,,,,factor,
+via002,He/She has taken frequent stands in the face of strong opposition.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via003,He/She never quits a task before it is done.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via004,He/She always keeps her promises.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via009,He/She always finishes what he/she starts.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via020,He/She never hesitates to publicly express an unpopular opinion.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via021,He/She believes honesty is the basis for trust.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via036,He/She stands up for what he/she believes even if there are negative results.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via037,He/She finishes things despite obstacles in the way.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via046,He/She loves what he/she does.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via051,His/Her promises can be trusted.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via058,He/She looks forward to each new day.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via064,He/She always stands up for his/her beliefs.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via065,He/She does not give up.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via066,He/She is true to his/her own values.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via072,He/She has lots of energy.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via090,He/She sticks with whatever he/she decides to do.,VIA Courage,VIA Industry/Perseverance/Persistence,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via111,He/She awakens with a sense of excitement about the day's possibilities.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via114,He/She is a brave person.,VIA Courage,VIA Valor/Bravery/Courage,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via115,Others trust him/her to keep their secrets.,VIA Courage,VIA Integrity/Honesty/Authenticity,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
+via120,He/She is full of zest.,VIA Courage,VIA Zest/Enthusiasm/Vitality,1,numeric,1 Strongly disagree 2 Disagree 3 Neither agree nor disagree 4 Agree 5 Strongly agree
