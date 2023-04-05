@@ -20,10 +20,10 @@ dict <- rio::import(file = "dictionary.xlsx")
 # e.g., gender: 1 -> 0 and 2 -> 1
 # 0 = male, 1 = female
 data <- data %>% 
-  mutate(gender_f = as.numeric(gender == 2))
+  dplyr::mutate(gender_f = as.numeric(gender == 2))
 # more sensitively, we can use dplyr::case_when()
 data <- data %>%
-  mutate(gender_f = case_when(
+  dplyr::mutate(gender_f = case_when(
     gender == 1 ~ 0,
     gender == 2 ~ 1,
     gender == 3 ~ NA_real_ # NA for real numbers
@@ -42,12 +42,12 @@ data <- data %>%
 data <- data %>%
   # create a new variable called bfas083R
   # which is the reverse of the item bfas083
-  mutate(bfas083R = 6 - bfas083)
+  dplyr::mutate(bfas083R = 6 - bfas083)
 
 # THE FAST WAY
 # pull items for current scale
 scale_items <- dict %>%
-  dplyr::filter(scale %in% "BFAS Conscientiousness") %>%
+  dplyr::filter(scale == "BFAS Conscientiousness") %>%
   pull(variable)
 
 # pull reversed items
@@ -90,11 +90,11 @@ dict$variable <- colnames(y) # merge renamed reverse items to dictionary
 # THE SLOW WAY
 # will have to list out all variables for the scale
 data <- data %>% 
-  mutate(consci = mean(# concatenate list of variables
-                       c(bfas003, bfas083R, bfas098), 
-                       
-                       # remove missing values
-                       na.rm = TRUE))
+  dplyr::mutate(consci = mean(# concatenate list of variables
+                              c(bfas003, bfas083R, bfas098), 
+                              
+                              # remove missing values
+                              na.rm = TRUE))
 
 # THE FAST WAY
 # use a dictionary
@@ -107,7 +107,7 @@ data <- data %>%
 consci_items <- dict %>% 
   
   # filter only rows that belong to BFAS Conscientiousness scale
-  filter(scale == "BFAS Conscientiousness") %>% 
+  dplyr::filter(scale == "BFAS Conscientiousness") %>% 
   
   # pull only the variable column
   pull(variable)
@@ -116,7 +116,7 @@ consci_items <- dict %>%
 data$consci <- data %>% 
   
   # select all columns that belong to BFAS Conscientiousness scale
-  select(all_of(consci_items)) %>% 
+  dplyr::select(all_of(consci_items)) %>% 
   
   # compute the mean row-wise after removing NA
   rowMeans(na.rm = TRUE)
