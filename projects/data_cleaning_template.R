@@ -70,6 +70,9 @@ temp_r <- temp_r %>%
   dplyr::mutate_at(vars(matches("\\dR$")),
                    codebook::reverse_labelled_values)
 
+# merge the reversed items back into the original data frame
+data <- cbind(data, temp_r)
+
 # reverse item names in dictionary
 # necessary if you are using the FAST WAY to score your scales
 variable <- c(dict$variable) # create a list of variables
