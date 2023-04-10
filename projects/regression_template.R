@@ -118,9 +118,22 @@ summary(multiple_regression)
 
 #### MODERATION ####
 
+# simulated data
+data <- data.frame(height = rnorm(n = 50, mean = 160, sd = 10),
+                   weight = rnorm(n = 50, mean = 150, sd = 10),
+                   sex = rep(c("men","women"),each = 25))
+
+# simple regression between height and weight
+simple_regression <- lm(weight ~ height,
+                        data = data)
+summary(simple_regression)
+
 # add an interaction term
 int_regression <- lm(outcome_variable ~ predictor * moderator, 
                      data = data_name)
+
+int_regression <- lm(weight ~ height * sex, 
+                     data = data)
 
 # see model results
 summary(int_regression)
@@ -129,3 +142,5 @@ summary(int_regression)
 plot_model(int_regression, type = "int",
            axis.title = c("x-axis", "y-axis"),
            title = "my plot title")
+
+
