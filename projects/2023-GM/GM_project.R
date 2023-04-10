@@ -35,7 +35,7 @@ View(dict_self)
 courage_peer_I <- dict_peer %>%
   dplyr::filter(scale == "VIA Courage") %>%
   pull(variable)
-data_peer$courage_peer <-data %>%
+data_peer$courage_peer <-data_peer %>%
   dplyr::select(all_of(courage_peer_I)) %>% 
   rowMeans(na.rm = TRUE)
   
