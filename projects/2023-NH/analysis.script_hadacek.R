@@ -1,5 +1,5 @@
 ###
-# 3/27/23
+# 4/8/23
 # Nick Hadacek
 # PSY4994V Final Project
 ###
@@ -19,21 +19,18 @@ library(dplyr)
 library(cowplot)
 library(psych)
 library(apaTables)
-library(haven)
-library(readr)
 library(rio)
 library(sjPlot)
 
 sessionInfo()
-#R version 4.2.2
-#ggplot2_3.4.1
-#dplyr_1.1.0
+#R version 4.2.3
+#ggplot2_3.4.2
+#dplyr_1.1.1
 #cowplot_1.1.1
-#psych_2.2.9 
+#psych_2.3.3 
 #apaTables_2.0.8
-#haven_2.5.1
-#readr_2.1.4
 #rio_0.5.29
+#sjPlot_2.8.14 
 
 getwd()
 #C:/Users/nickh/OneDrive/Desktop/Working Directory
@@ -60,7 +57,7 @@ data_peer$consci_peer <- data_peer %>%
 
 # averaging informants responding about same participant 
 peer_group <- data_peer %>% group_by(ID) %>% 
-  summarise(consci_peer = mean(data_peer$consci_peer,na.rm = TRUE),
+  summarise(consci_peer = mean(consci_peer,na.rm = TRUE),
             .groups = 'drop')
 
 # creating self conscientiousness variable 
@@ -110,42 +107,63 @@ jointdataset <- merge(data_self, peer_group, by = 'ID')
 jointdataset <- jointdataset %>% 
   dplyr::mutate(consci_dif = (consci_peer - consci_self))
 
+# DATA VISUALIZATION ####
+
+sconsci_dat_descr <- data.frame(describe(jointdataset$consci_self), 
+                                row.names = "sconsci_dat_descr")
+pconsci_dat_descr <- data.frame(describe(jointdataset$consci_peer), 
+                                row.names = "pconsci_dat_descr")
+pid_dat_descr <- data.frame(describe(jointdataset$pid), 
+                            row.names = "pid_dat_descr")
+pil_dat_descr <- data.frame(describe(jointdataset$pil), 
+                            row.names = "pil_data_descr")
+neuro_dat_descr <- data.frame(describe(jointdataset$neuro), 
+                              row.names = "neuro_data_descr")
+withdraw_dat_descr <- data.frame(describe(jointdataset$withdraw), 
+                                 row.names = "withdraw_dat_descr")
+
+dat.df <- t(rbind.data.frame(sconsci_dat_descr, pconsci_dat_descr, 
+                             pid_dat_descr, pil_dat_descr,neuro_dat_descr, 
+                             withdraw_dat_descr))
+
+corr.test(jointdataset$consci_peer, jointdataset$consci_self)
+
 # REGRESSION ANALYSIS ####
 
 ## simple regression ####
 simple_regression <- lm(consci_dif ~ pid, data = jointdataset)
 summary(simple_regression)
-#interpreting
-  #consci_dif=(-.25410)pid+.68551
-  #p=1.523e-06
-  #For every increase in rigid perfectionism of 1, the difference between 
-  #peer-reported conscientiousness and self-reported conscientiousness decreases 
-  #by -0.2541. Given that rigid perfectionism ranges from 1-4 and 
-  #conscientiousness ranges from 1-5, this is a moderate-sized correlation 
-  #(r=-0.3189428). The result is also statistically significant (p<.05).
+
+#interpret
+
+#consci_dif = -0.08835(pid) + 0.34236, p = .10035
+#for every increase of one in pid, consci_dif decreases by -.09. 
+#result is insignificant (p>.05)
 
 #visualize
 ggplot(jointdataset, aes(pid, consci_dif)) +
   geom_point(color = "#f1c232") +
   geom_smooth(method = "lm", color = "#710c0c") +
-  labs(title = "Multiple Regression", x = "Rigid Perfectionism", 
+  labs(title = "Conscientiousness Difference Score X Rigid Perfectionism", x = "Rigid Perfectionism", 
        y = "Conscientiousness Difference Score")
 
 #correlation test
 cor(jointdataset$consci_dif, jointdataset$pid, use = "pairwise")
 
 ## multiple regression ####
-#multiple_regression <- lm(outcome_variable ~ pred1 + pred2 + pred.etc, data = data)
-#for moderator, use * instead of +
-
 multiple_regression <- lm(consci_dif ~ pid + pil + neuro + withdraw, 
                           data = jointdataset)
 summary(multiple_regression)
-#interpreting
-  #consci_dif=(-.33045)pid+1.79231
-  #p=2.11e-10
-  #For every increase in rigid perfectionism of 1, the difference between
-  #peer-reported conscientiousness and self-reported conscientiousness decreases
-  #by -.33045 (when purpose in life, neuroticism, and withdrawal are controlled
-  #for). This result is significant (p<.05) and demonstrates an even stronger
-  #relationship than the simple regression model.
+
+#interpret
+
+#consci_dif = -0.14248(pid) - 0.09772(pil) - 0.10898(neuro) + 0.22687(withdraw), 
+#p = 0.0104
+#for every increase of one in pid, consci_dif decreases by .14 when controlling 
+#for pil, neuro, and withdraw
+#result is significant (p<.05)
+
+apaTables::apa.reg.table(multiple_regression, 
+                         filename = "conscidifXpid_regtable.gdoc")
+
+plot_model(multiple_regression, type = "slope")
