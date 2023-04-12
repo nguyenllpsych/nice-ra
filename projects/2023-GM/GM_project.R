@@ -65,15 +65,51 @@ peer_avg <- data_peer %>% group_by(ID) %>%
   summarize(courage_peer =mean(courage_peer, na.rm=TRUE),
             .groups ='drop')
 
+#family score of courage
+family <- data_peer %>%
+  filter(relatp == 1) %>%
+  select(ID, courage_peer)
+
+
+#Combinging family scores with self 
+family_self <- merge(data_self, family, by = 'ID')
+
+#Friend score of courage
+friends <- data_peer %>%
+  filter(relatp == 2) %>%
+  select(ID, courage_peer)
+
+#combining friend scores with self
+friends_self <- merge(data_self, friends, by = 'ID')
+
 # Combined Dataframes
 PeerSelfdata <- merge(data_self, peer_avg, by = 'ID')
 
 # Finding Difference between self and peer courage 
 PeerSelfdata <- PeerSelfdata %>% 
   dplyr::mutate(courage_difference = (courage_self - courage_peer))
-#YES LETS GO
 
 # Viz and desc
 
 scourage_dat_desc <- data.frame(describe(PeerSelfdata$courage_self),
                               row.names = "selfcourage_viz")
+
+#### Analysis ####
+
+t_test_paired <- t.test(x = PeerSelfdata$courage_self, 
+                        y = PeerSelfdata$courage_peer, 
+                        paired = TRUE)
+
+t.test(x = friends_self$courage_self, 
+                        y = friends_self$courage_peer, 
+                        paired = TRUE)
+
+t.test(x = family_self$courage_self, 
+                        y = family_self$courage_peer, 
+                        paired = TRUE)
+
+
+t_test_paired
+# T test report
+  #in our sample, we saw that self rating of courage was lower than peer rating
+  #. 
