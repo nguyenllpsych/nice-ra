@@ -89,7 +89,6 @@ PeerSelfdata <- merge(data_self, peer_avg, by = 'ID')
 PeerSelfdata <- PeerSelfdata %>% 
   dplyr::mutate(courage_difference = (courage_self - courage_peer))
 
-
 # Viz and desc
 
 scourage_dat_desc <- data.frame(describe(PeerSelfdata$courage_self),
