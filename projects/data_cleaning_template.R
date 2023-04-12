@@ -89,12 +89,13 @@ dict$variable <- colnames(y) # merge renamed reverse items to dictionary
 
 # THE SLOW WAY
 # will have to list out all variables for the scale
-data <- data %>% 
-  dplyr::mutate(consci = mean(# concatenate list of variables
-                              c(bfas003, bfas083R, bfas098), 
-                              
-                              # remove missing values
-                              na.rm = TRUE))
+data$consci <- data %>% 
+  
+  # select all columns that belong to BFAS Conscientiousness scale MANUALLY
+  dplyr::select(bfas003, bfas083R, bfas098) %>% 
+
+  # compute the mean row-wise after removing NA
+  rowMeans(na.rm = TRUE)
 
 # THE FAST WAY
 # use a dictionary
