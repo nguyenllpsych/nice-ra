@@ -41,20 +41,6 @@ dict_self <-rio::import(file = "dict_self.csv")
 View(dict_peer)
 View(dict_self)
 
-#### Demo ####
-summary(as.factor(data_self$gender))
-summary(as.factor(data_peer$gender))
-
-summary(data_self$age)
-summary(data_peer$age)
-
-ggplot(data_peer, aes(x=knowrelatp)) + 
-  geom_histogram(fill="blue", binwidth = 1) + 
-  theme_classic()+
-  ylab("") +
-  ggtitle("Histogram of acquaintance level")+
-  xlab("How well do you know this person?")
-
 #### Recoding Variables ####
 
 # Self Courage Score Variable
@@ -99,29 +85,6 @@ friends_self <- merge(data_self, friends, by = 'ID')
 # Combined Dataframes
 PeerSelfdata <- merge(data_self, peer_avg, by = 'ID')
 
-# select only friends
-friends <- friends_self %>% select(ID, courage_peer) %>% 
-  # rename to generic courage
-  rename(courage = courage_peer) %>%
-  mutate(type = "friends")
-
-# select only family
-family <- family_self %>% select(ID, courage_peer) %>% 
-  rename(courage = courage_peer) %>%
-  mutate(type = "family")
-
-# select only self
-self <- family_self %>% select(ID, courage_self) %>% 
-  rename(courage = courage_self) %>%
-  mutate(type = "self")
-
-# combine the three separate dataframe into a long dataframe
-long <- rbind(self, friends)
-long <- rbind(long, family)
-View(long)
-summary(as.factor(long$type))
-
-
 # Finding Difference between self and peer courage 
 PeerSelfdata <- PeerSelfdata %>% 
   dplyr::mutate(courage_difference = (courage_self - courage_peer))
@@ -150,25 +113,3 @@ t_test_paired
 # T test report
   #in our sample, we saw that self rating of courage was lower than peer rating
   #. 
-
-#### Visualization ####
-plot <- long %>%
-  group_by(type) %>%
-  summarise(
-    n=n(), 
-    mean=mean(courage, na.rm = T),
-    sd=sd(courage, na.rm = T)
-  ) %>%
-  mutate( se=sd / sqrt(n)) %>%
-  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
- 
-#bar plot w CI
-
-ggplot(plot) +
-  geom_bar( aes(x=type, y=mean), stat="identity", fill="blue", alpha=0.5) +
-  geom_errorbar( aes(x=type, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="maroon", alpha=0.9, size=1.5) +
-  ggtitle("Courage across self and other reports")+
-  xlab("Informant type") +
-  ylab("Courage Score")+
-  ylim(0,5) +
-  theme_classic()
